@@ -5,10 +5,11 @@ import { TextInput, Button } from 'react-native-paper';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import Navigation from '../navigation/AppNavigator';
 
 
 
-export default function FormScreen(){
+export default function FormScreen({navigation}){
     let[userUid,setUserUid]=useState('');
 
     async function userDataAdd(uid,name,age,gender,domain){
@@ -19,7 +20,7 @@ export default function FormScreen(){
             gender,
             domain
         })
-        .then(() => console.log('Data updated.'));
+        .then(()=>navigation.navigate('Login'));
     }
 
   

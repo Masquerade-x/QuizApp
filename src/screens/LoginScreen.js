@@ -32,7 +32,7 @@ export default function LoginScreen({navigation}) {
     async function Login(){
         console.log('Login');
         try{
-            await auth().signInWithEmailAndPassword(email,password).then(()=>navigation.navigate('Form'))
+            await auth().signInWithEmailAndPassword(email,password).then(()=>navigation.navigate('Home'))
         }catch(error){
             console.log(error);
         }

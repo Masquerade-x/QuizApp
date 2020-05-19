@@ -28,7 +28,7 @@ export default function SignupsScreen({navigation}){
     async function onCreateAccount(){
         try{
             await AsyncStorage.setItem('@storage_Key',name);
-            await auth().createUserWithEmailAndPassword(email,password).then(()=>navigation.navigate('Login'))
+            await auth().createUserWithEmailAndPassword(email,password).then(()=>navigation.navigate('Form'))
         }catch(error){
             console.log(error);
         }
