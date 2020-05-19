@@ -1,0 +1,57 @@
+[
+    {   
+        "id":1,
+        "question": "Everything in PHP ______",
+        "options":[
+                {
+                    "id":1,
+                    "option":"var"
+                },
+                {
+                    "id":2,
+                    "option": "let"
+                },
+                {
+                    "id":3,
+                    "option": "char"
+                },
+                {
+                    "id":4,
+                    "option": "nothing"
+
+                },
+                {
+                    "id":2,
+                    "answer": "char"
+                }
+            ]
+        },
+            {
+                "id":2,
+                "question": "How many elements does a php component return?",
+                "options":[
+                    {
+                        "id":1,
+                        "option": "0 Elements"
+                    },
+                    {
+                        "id":2,
+                        "option": "10 Element"
+                    },
+                    {
+                        "id":3,
+                        "option": "Multiple Elements"
+                    },
+                    {
+                        "id":4,
+                        "option": "None of These"    
+                    },
+                    {
+                        "id":3,
+                        "answer": "Multiple Elements"
+                    }
+                ]                
+            }
+        
+    
+]
