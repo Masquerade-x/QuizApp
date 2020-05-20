@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import {SafeAreaView,View,StyleSheet,TextInput,Button, AsyncStorage} from 'react-native'
+import {SafeAreaView,ImageBackground,Text,View,StyleSheet,TextInput,TouchableOpacity, AsyncStorage} from 'react-native'
 import {
   responsiveHeight,
   responsiveWidth,
@@ -36,23 +36,39 @@ export default function SignupsScreen({navigation}){
     }
 
     return(
-      <View style={styles.container}>
+      <ImageBackground source={require('../assets/button.jpg')} style={styles.container}>
           <View style={styles.form}> 
-          <View style={[styles.name,styles.class]}>
-                  <TextInput  placeholder='Enter Full Name' style={styles.textInput} autoCapitalize="none" onChangeText={e=>setName(e)} value={name}></TextInput>
-              </View>
-              <View style={[styles.email,styles.class]}>
-                  <TextInput  placeholder='Enter Email' style={styles.textInput} autoCapitalize="none" onChangeText={e=>setEmail(e)} value={email}></TextInput>
-              </View>
-              <View style={[styles.class,styles.password]}>
-                  <TextInput placeholder='Enter Password'  style={styles.textInput} autoCapitalize="none" onChangeText={e=>setPassword(e)} value={password}></TextInput>
-              </View>
-              <View style={[styles.btnText,styles.class]}>
-                    <Button onPress={onCreateAccount} style={styles.btn} title="signuip"/>
+            <View style={styles.email}>
+                <TextInput label='Email' style={styles.textInput}
+                placeholderTextColor="white" 
+                placeholderTextSize='40'
+                onChangeText={e=>setEmail(e)} 
+                placeholder='Enter Email'
+                 autoCapitalize="none"
+                value={email}/>
+                <View style={[styles.line,styles.linePlace1]} />
+                <View style={[styles.circle,styles.semicircle]} />
+            </View>
+           <View style={styles.password}>
+                <TextInput label='Password' style={styles.textInput}
+                 secureTextEntry 
+                 placeholderTextColor="white" 
+                 placeholder='Enter Password'
+                 onChangeText={pass=>setPassword(pass)} 
+                 autoCapitalize="none"
+                 value={password}></TextInput>
+                <View style={[styles.line,styles.linePlace2]} />
+                <View style={[styles.circle2,styles.semicircle]} />
+                <View style={[styles.line,styles.linePlace3]} />
+            </View>
+              <View style={styles.btn}>
+              <TouchableOpacity onPress={onCreateAccount} style={styles.touch}>
+                      <Text style={{fontSize:22,color:'white'}}>Sign Up</Text>
+              </TouchableOpacity>
                     
               </View>              
           </View>
-        </View>
+        </ImageBackground>
     )
   }
   
@@ -60,15 +76,6 @@ export default function SignupsScreen({navigation}){
     container:{
       flex:1,
       backgroundColor:'white'
-      },
-    welcomemsg:{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center',
-    },
-    class:{
-      marginBottom:20,
-      alignItems:'center'
     },
     form:{
       flex:2,
@@ -77,17 +84,73 @@ export default function SignupsScreen({navigation}){
     password:{
       marginBottom:40,
     },
-    textInput:{
-      width:responsiveWidth(80),
-      width:responsiveWidth(80),
-      borderBottomColor:'#6310e3',
-      borderBottomWidth:StyleSheet.hairlineWidth,
-      color:'#6310e3'
-    },
-    btnText:{
+    email:{
       alignItems:'center',
+      marginBottom:25,
+    },
+    password:{
+      alignItems:'center',
+      marginBottom:40,
+    },
+    textInput:{
+      width: responsiveWidth(70),
+      fontSize:18,
+      color:'white',
+      textAlign:'center',
+    },
+    line:{
+        height:2,
+        backgroundColor:'white',
+    },
+    linePlace1:{
+      width:responsiveWidth(73),
+      top:-64,
+      right:16
+    },
+    linePlace2:{
+      width:responsiveWidth(65),
+      top:-62,
+      left:1
+    },
+    linePlace3:{
+      width:responsiveWidth(72),
+      top:14,
+      left:15
+    },
+    circle: {
+      borderTopRightRadius: 60,
+      borderBottomRightRadius:60,
+      borderLeftWidth:0,
+      right:30,
+      top:-15.2
+    },
+    circle2: {
+      borderTopLeftRadius: 60,
+      borderBottomLeftRadius:60,
+      borderRightWidth:0,
+      left:32,
+      top:-13,
+      
+    },
+    semicircle:{
+      width:responsiveWidth(10),
+      height: 80,
+      borderColor:'white',
+      borderWidth:2,
+      position:"absolute",
     },
     btn:{
-      width:responsiveWidth(50)
+      justifyContent:'center',
+      alignItems:'center'
+    },
+    touch:{
+      justifyContent:'center',
+      alignItems:'center',
+      marginTop:80,
+      height:responsiveHeight(6),
+      borderWidth:2,
+      borderColor:'white',
+      width:responsiveWidth(70),
+      borderRadius:30
     }
   })
