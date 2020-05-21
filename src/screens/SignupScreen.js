@@ -1,21 +1,23 @@
-import React,{useState, useEffect} from 'react';
-import {SafeAreaView,ImageBackground,Text,View,StyleSheet,TextInput,TouchableOpacity, AsyncStorage} from 'react-native'
+import React,{useState, useEffect,useCallback} from 'react';
+import {RefreshControl,ScrollView,ImageBackground,Text,View,StyleSheet,TextInput,TouchableOpacity, AsyncStorage} from 'react-native'
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize
 } from "react-native-responsive-dimensions";
-import  auth from '@react-native-firebase/auth'
+import  auth from '@react-native-firebase/auth';
 
 export default function SignupsScreen({navigation}){
     let[password,setPassword]=useState('');
     let[email,setEmail]=useState('');
     let[name,setName]=useState('');
     let[errorMessage,setErrorMessage]=useState('');
+    let[refreshing,setRefreshing]=useState(false);
+
   
     function getErrorMessage(){ 
       if(!email && !password ){
-        return 'fields are mandatory'
+       return 'fields are mandatory'
       }
       if(!email){
         return 'Email is missing'
@@ -25,9 +27,22 @@ export default function SignupsScreen({navigation}){
       }
     }
 
+    let onRefresh= useCallback(()=>{
+      setRefreshing(true);
+      setEmail(''); 
+      setPassword('');
+      setErrorMessage('');
+      setRefreshing(false);
+    },[refreshing]);
+
     async function onCreateAccount(){
-        try{
-            await AsyncStorage.setItem('@storage_Key',name);
+      if(!email||!password){
+        const error = getErrorMessage();
+          setErrorMessage(error)
+        return;
+      }       
+
+      try{
             await auth().createUserWithEmailAndPassword(email,password).then(()=>navigation.navigate('Form'))
         }catch(error){
             console.log(error);
@@ -36,8 +51,14 @@ export default function SignupsScreen({navigation}){
     }
 
     return(
-      <ImageBackground source={require('../assets/button.jpg')} style={styles.container}>
-          <View style={styles.form}> 
+    <ScrollView contentContainerStyle={styles.scrollView} 
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
+      <ImageBackground source={require('../assets/button.jpg')} style={styles.container}>  
+        <View style={styles.error}>
+            <Text style={{color:'white'}}>{errorMessage}</Text>
+        </View>
+        <View style={styles.form}> 
             <View style={styles.email}>
                 <TextInput label='Email' style={styles.textInput}
                 placeholderTextColor="white" 
@@ -69,17 +90,26 @@ export default function SignupsScreen({navigation}){
               </View>              
           </View>
         </ImageBackground>
+      </ScrollView>
     )
   }
   
   let styles = StyleSheet.create({
+    scrollView:{
+      flex:1
+    },
     container:{
       flex:1,
       backgroundColor:'white'
     },
     form:{
-      flex:2,
+      flex:5,
      justifyContent:'center',
+    },
+    error:{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
     },
     password:{
       marginBottom:40,

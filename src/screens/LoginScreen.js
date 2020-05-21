@@ -1,27 +1,36 @@
-import React,{useState, useEffect} from 'react';
-import { View, Text,TextInput, StyleSheet,AsyncStorage,RefreshControl,ScrollView, ImageBackground } from 'react-native';
+import React,{useState, useEffect, useCallback} from 'react';
+import { View, Text,TextInput, StyleSheet,RefreshControl,ScrollView, ImageBackground } from 'react-native';
 import {
     responsiveHeight,
     responsiveWidth,
     responsiveFontSize
   } from "react-native-responsive-dimensions";
 import auth from '@react-native-firebase/auth';
-import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function LoginScreen({navigation}) {
     let[email,setEmail]=useState('');
     let[password,setPassword]=useState('');
-    let[userInfo,setUserInfo]=useState('')
+    let[userInfo,setUserInfo]=useState('');
+    let[refreshing,setRefreshing]=useState(false);
+    let[user,setUser]=useState({})
     
   
     // Set an initializing state whilst Firebase connects
     let [initializing, setInitializing] = useState(true);
-    let [user, setUser] = useState();
+    
+
+    let onRefresh= useCallback(()=>{
+      setRefreshing(true);
+      setEmail(''); 
+      setPassword('');
+      setRefreshing(false);
+      setInitializing(true);
+    },[refreshing]);
 
     function onAuthStateChanged(user){
         setUser(user);
-        if(initializing) setInitializing(false);
+        
     }
 
     useEffect(()=>{
@@ -40,13 +49,16 @@ export default function LoginScreen({navigation}) {
     }
 
      return (
-<ImageBackground source={require('../assets/green.jpg')} style={styles.img}> 
+  <ScrollView contentContainerStyle={styles.scrollView} 
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+  >
+    <ImageBackground source={require('../assets/green.jpg')} style={styles.img}>  
       <View style={styles.title}>
         <Text style={{color:'white',fontSize:40}}>Login</Text>
       </View>
         <View style={styles.form}> 
             <View style={styles.email}>
-                <TextInput label='Email' style={styles.textInput}
+               <TextInput label='Email' style={styles.textInput}
                 placeholderTextColor="white" 
                 placeholderTextSize='40'
                 onChangeText={e=>setEmail(e)} 
@@ -88,10 +100,14 @@ export default function LoginScreen({navigation}) {
              </Text> 
           </View>
       </ImageBackground>
+    </ScrollView>
     )
   }
 
   let styles= StyleSheet.create({
+      scrollView:{
+        flex:1
+      },
       img:{
           flex:1,
         },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect ,useRef} from 'react'
-import { Text,View,StyleSheet, SafeAreaView} from "react-native";
+import { Text,View,StyleSheet,RefreshControl,ScrollView, SafeAreaView} from "react-native";
 
 import {
     responsiveHeight,
@@ -19,7 +19,9 @@ export default function QuizScreen({navigation,route}){
     let[correctAnswers,setCorrectAnswers]=useState(0)
     let[wrongAnswers,setWrongAnswers]=useState(0)
     let[choice,setChoice]=useState('');
-    let carouselRef = useRef('')
+    let carouselRef = useRef('');
+    let[refreshing,setRefreshing]=useState(false);
+
 
     console.log(route.params.subject,'heklkfjla');  
     console.log(questions);
