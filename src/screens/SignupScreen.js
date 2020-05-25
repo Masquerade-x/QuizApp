@@ -6,6 +6,8 @@ import {
   responsiveFontSize
 } from "react-native-responsive-dimensions";
 import  auth from '@react-native-firebase/auth';
+import { showMessage, hideMessage } from "react-native-flash-message";
+
 
 export default function SignupsScreen({navigation}){
     let[password,setPassword]=useState('');
@@ -15,17 +17,17 @@ export default function SignupsScreen({navigation}){
     let[refreshing,setRefreshing]=useState(false);
 
   
-    function getErrorMessage(){ 
-      if(!email && !password ){
-       return 'fields are mandatory'
-      }
-      if(!email){
-        return 'Email is missing'
-      }
-      if(!password){
-        return 'Password is missing'
-      }
-    }
+    // function getErrorMessage(){ 
+    //   if(!email && !password ){
+    //    return 'fields are mandatory'
+    //   }
+    //   if(!email){
+    //     return 'Email is missing'
+    //   }
+    //   if(!password){
+    //     return 'Password is missing'
+    //   }
+    // }
 
     let onRefresh= useCallback(()=>{
       setRefreshing(true);
@@ -36,17 +38,22 @@ export default function SignupsScreen({navigation}){
     },[refreshing]);
 
     async function onCreateAccount(){
-      if(!email||!password){
-        const error = getErrorMessage();
-          setErrorMessage(error)
-        return;
-      }       
+      // if(!email||!password){
+      //   let error = getErrorMessage();
+      //     setErrorMessage(error)
+      //   return;
+      // }       
 
       try{
             await auth().createUserWithEmailAndPassword(email,password).then(()=>navigation.navigate('Form'))
         }catch(error){
-            console.log(error);
-        }
+          showMessage({
+            message:'Error',
+            description: 'Invalid credentials !!! Please try again !',  
+            type: 'Cutstom',
+            backgroundColor:'none',
+            color: "white", // text color
+          });        }
 
     }
 

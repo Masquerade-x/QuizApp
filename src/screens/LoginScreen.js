@@ -7,14 +7,17 @@ import {
   } from "react-native-responsive-dimensions";
 import auth from '@react-native-firebase/auth';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { showMessage, hideMessage } from "react-native-flash-message";
+
 
 export default function LoginScreen({navigation}) {
     let[email,setEmail]=useState('');
     let[password,setPassword]=useState('');
     let[userInfo,setUserInfo]=useState('');
     let[refreshing,setRefreshing]=useState(false);
-    let[user,setUser]=useState({})
-    
+    let[user,setUser]=useState({});
+    let[errorMessage,setErrorMessage]=useState('');
+
   
     // Set an initializing state whilst Firebase connects
     let [initializing, setInitializing] = useState(true);
@@ -38,13 +41,18 @@ export default function LoginScreen({navigation}) {
         return subscribe;
     },[])
 
-
      async function Login(){
         try{
             await auth().signInWithEmailAndPassword(email,password).then(()=>navigation.navigate('Home'))
         }catch(error){
-            console.log(error);
-        }
+          showMessage({
+            message:'Error',
+            description: 'Invalid credentials !!! Please try again !',  
+            type: 'Cutstom',
+            backgroundColor:'none',
+            color: "white", // text color
+          });
+      }
 
     }
 
