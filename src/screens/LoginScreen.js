@@ -8,6 +8,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function LoginScreen({navigation}) {
@@ -71,7 +72,7 @@ export default function LoginScreen({navigation}) {
                 placeholderTextSize='40'
                 onChangeText={e=>setEmail(e)} 
                 placeholder='Enter Email'
-                 autoCapitalize="none"
+                autoCapitalize="none"   
                 value={email}/>
                 <View style={[styles.line,styles.linePlace1]} />
                 <View style={[styles.circle,styles.semicircle]} />

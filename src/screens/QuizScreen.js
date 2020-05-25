@@ -91,12 +91,12 @@ export default function QuizScreen({navigation,route}){
             />
         </View>
         <View style={styles.dash}>
-            <Text style={{fontSize:24,color:'#6a0dad',marginRight:20}}>No of questions:{noOfQuestion}</Text>
-            <Text style={{fontSize:24,color:'#6a0dad',marginRight:20}}>No of correctAnswer:{correctAnswers}</Text>
-            <Text style={{fontSize:24,color:'#6a0dad',marginRight:20}}>No of worng:{wrongAnswers}</Text>
+            <Text style={{fontSize:24,color:'green',marginRight:20}}>No of questions:{noOfQuestion}</Text>
+            <Text style={{fontSize:24,color:'green',marginRight:20}}>No of correctAnswer:{correctAnswers}</Text>
+            <Text style={{fontSize:24,color:'green',marginRight:20}}>No of worng:{wrongAnswers}</Text>
         </View>
         <View style={styles.creator}>
-            <Text style={{color:'#6a0dad',fontSize:14,fontStyle:'italic'}}>&#xA9;Masquerade</Text>
+            <Text style={{color:'green',fontSize:14,fontStyle:'italic'}}>&#xA9;Masquerade</Text>
         </View>
         
     </SafeAreaView>
@@ -113,7 +113,7 @@ var styles=StyleSheet.create({
       
     },
     card:{
-        backgroundColor:'#6a0dad',
+        backgroundColor:'green',
         borderRadius:5,
         alignItems:'center',
         marginTop:60,

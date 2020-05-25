@@ -1,7 +1,7 @@
 import React, { useState,useCallback,useEffect } from 'react';
 import { RefreshControl,ScrollView,Text,View,StyleSheet} from "react-native";
-import { List} from 'react-native-paper';
-import { responsiveWidth } from 'react-native-responsive-dimensions';
+import { List,Colors,IconButton} from 'react-native-paper';
+import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import auth from '@react-native-firebase/auth';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -22,27 +22,22 @@ export default function HomeScreen({navigation}){
         setExpanded(!expanded)
     }; 
 
-    async function signOut(){
-        auth().signOut()
-        .then(() => navigation.navigate('Login'));
-    }
-
-   
    
     return(
         <ScrollView contentContainerStyle={styles.scrollView} 
                     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >            
-            <View style={styles.heading}>
-                <Text style={{fontSize:28,color:'white'}}>Choose Your Domain</Text>
-                <TouchableOpacity onPress={signOut} >
-                    <Text>signOut</Text>
-                </TouchableOpacity>
+            <View style={styles.topbar}>    
+                <IconButton  icon="menu" color={Colors.green500} size={25} onPress={() => navigation.toggleDrawer()} />
+            </View>
+            <View style={styles.welcome}>
+                <Text style={{fontSize:28}}>Welcome to the Quiz!!!</Text>
+                <Text style={{fontSize:28}}>Cheating ends here!</Text>
             </View>
             <View style={styles.languages}>
             <List.Section >
             <List.Accordion title="Choose your Domain"  style={styles.list}
-                left={props => <List.Icon {...props}  icon="folder" />}>
+                left={props =>  <List.Icon color={Colors.green500} icon="buffer" />}>
                     <List.Item title="PHP" onPress={()=>navigation.navigate('Quiz',{subject:'PHP'})} />
                     <List.Item title="React Native" onPress={()=>navigation.navigate('Quiz',{subject:"React"})} />
             </List.Accordion>    
@@ -59,16 +54,26 @@ let styles=StyleSheet.create({
         flex:1,
         
     },
-    heading:{
+    topbar:{
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+    },
+    welcome:{
         flex:1,
         justifyContent:'center',
         alignItems:'center'
+    },
+    touch:{
+        backgroundColor:'green',
+        width:responsiveWidth(15),
+        height:responsiveHeight(4)
+
     },
     languages:{
         flex:4,
     },
     list:{
        marginTop:70,
-       width:responsiveWidth(95)
+       width:responsiveWidth(95),
     }
 })
