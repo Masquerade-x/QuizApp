@@ -14,7 +14,7 @@ import {  IconButton,Button,Colors } from 'react-native-paper';
 
 
 export default function QuizScreen({navigation,route}){
-    let[questions,setQuestions]=useState({})
+    let[questions,setQuestions]=useState([])
     let[noOfQuestion,setNoOfQuestion]=useState(1)
     let[noOfAnsweredQuestion,setNoOfAnsweredQuestion]=useState(0)
     let[currentQuestionIndex,setCurrentQuestionIndex]=useState(0)
@@ -36,9 +36,27 @@ export default function QuizScreen({navigation,route}){
     //         setQuestions(phpQuestions);
     //     }
     // },[])
+    // useEffect(()=>{
+    //     var unsubscribe = database().ref('data/questions/');
+    //     unsubscribe.on('value',data =>{
+    //       let questionArray=[];
+    //       data.forEach(data=>{
+    //         var uData= user.val();
+    //         questionArray.push(uData);
+    //       });
+    //       setQuestions(uData)
+    //     })
+    //     return ()=>{
+    //       unsubscribe && unsubscribe.off();
+    //     };
+    //   },[]);
 
     useEffect(async()=>{
-        
+        database().ref(`/data/questions/`)
+        .on('value',snapshot=>{console.log(snapshot.val())
+        let arr= snapshot.val()
+        setQuestions(arr)
+    })
     },[])
 
     
@@ -58,7 +76,6 @@ export default function QuizScreen({navigation,route}){
         setNoOfAnsweredQuestion(noOfAnsweredQuestion+1)
     }
 
-    console.log(correctQuestionsArray);
 
    const renderOption=(item)=>{
        console.log(item)
@@ -91,8 +108,7 @@ export default function QuizScreen({navigation,route}){
     function showSubmitButton(){
         // setScore(correctQuestionsArray.length+1)
         // navigation.navigate('Success')
-        console.log('hey')
-
+        navigation.navigate('Success',{score:correctQuestionsArray.length})
     }
 
 
@@ -107,7 +123,6 @@ export default function QuizScreen({navigation,route}){
             data={questions}
             scrollEnabled={false}
             renderItem={renderOption}
-            firstItem={1}     
             sliderWidth={responsiveWidth(100)}
             snapToPrev={animated = true, fireCallback = true}
             snapToNext={animated = true, fireCallback = true}

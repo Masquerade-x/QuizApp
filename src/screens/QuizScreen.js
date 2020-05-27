@@ -34,7 +34,20 @@ export default function QuizScreen({navigation,route}){
         }else{
             setQuestions(phpQuestions);
         }
+    },[])
 
+    useEffect(async()=>{
+
+        if(route.params.subject ==='React'){
+            try{
+                await database().ref(`data/questions/`).once('value')
+                .then(snapshot=>{
+                    setQuestions(snapshot.val())
+                });
+            }catch(error){
+                console.log(error);
+            }
+        }
     },[])
     
    const checkAnswer= (id,item)=>{
@@ -83,11 +96,10 @@ export default function QuizScreen({navigation,route}){
     }
 
     function showSubmitButton(){
-        console.log(score);
-
-        navigation.navigate('Success',{score:correctQuestionsArray.length})
+        navigation.navigate('Success')
     }
 
+    console.log(correctQuestionsArray);
 
     return(
     <SafeAreaView style={styles.container}>
@@ -100,6 +112,7 @@ export default function QuizScreen({navigation,route}){
             data={questions}
             scrollEnabled={false}
             renderItem={renderOption}
+            firstItem={1}     
             sliderWidth={responsiveWidth(100)}
             snapToPrev={animated = true, fireCallback = true}
             snapToNext={animated = true, fireCallback = true}
