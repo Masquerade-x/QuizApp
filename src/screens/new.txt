@@ -9,12 +9,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Carousel from 'react-native-snap-carousel';
 import reactQuestions from '../questions/reactQuestions';
 import phpQuestions from'../questions/phpQuestions';
-import {  IconButton,Button,Colors } from 'react-native-paper';
 import database from '@react-native-firebase/database';
+import {  IconButton,Button,Colors } from 'react-native-paper';
 
 
 export default function QuizScreen({navigation,route}){
-    let[questions,setQuestions]=useState([])
+    let[questions,setQuestions]=useState({})
     let[noOfQuestion,setNoOfQuestion]=useState(1)
     let[noOfAnsweredQuestion,setNoOfAnsweredQuestion]=useState(0)
     let[currentQuestionIndex,setCurrentQuestionIndex]=useState(0)
@@ -28,71 +28,71 @@ export default function QuizScreen({navigation,route}){
     let[buttonShow,setButtonShow]=useState(true);
 
 
-    useEffect(async()=>{
+    // useEffect(()=>{
 
-        if(route.params.subject ==='React'){
-            try{
-                await database().ref(`data/questions/`).once('value')
-                .then(snapshot=>{
-                    setQuestions(snapshot.val())
-                });
-            }catch(error){
-                console.log(error);
-            }
-        }
+    //     if(route.params.subject ==='React'){
+    //         setQuestions(reactQuestions);
+    //     }else{
+    //         setQuestions(phpQuestions);
+    //     }
+    // },[])
+
+    useEffect(async()=>{
+        
     },[])
 
-    console.log(questions);
-
-   const checkAnswer= (id,item)=>{
-       let correct = item.item.correctAnswer.id === id;
-       correct ? correctAnswer(id) : wrongAnswer(id)
+    
+   const checkAnswer= (option,item)=>{
+       let correct = option===item.item.answer;
+       correct ? correctAnswer(option) : wrongAnswer()
    }
 
-   function correctAnswer(id){
+   function correctAnswer(option){
     setCurrentQuestionIndex(currentQuestionIndex +1),
     setNoOfAnsweredQuestion(noOfAnsweredQuestion+1),
-    setCorrectQuestionsArray(oldArray=>[...oldArray,id])
+    setCorrectQuestionsArray(oldArray=>[...oldArray,option])
     }
 
-    function wrongAnswer(id){
+    function wrongAnswer(){
         setCurrentQuestionIndex(currentQuestionIndex +1),
         setNoOfAnsweredQuestion(noOfAnsweredQuestion+1)
     }
 
+    console.log(correctQuestionsArray);
 
    const renderOption=(item)=>{
-       console.log(item);
+       console.log(item)
         return(
         <>
             <View style={styles.card}>
               <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.question}</Text>
                 <View style={styles.option}>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[0].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[0].option}</Text>
+                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options.optionA,item)}>
+                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options.optionA}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[1].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[1].option}</Text>
+                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options.optionB,item)}>
+                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options.optionB}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[2].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[2].option}</Text>
+                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options.optionC,item)}>
+                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options.optionC}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[3].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[3].option}</Text>
+                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options.optionD,item)}>
+                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options.optionD}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={styles.doneBtn}>
-                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true)} />        
-                <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={showSubmitButton}>Submit</Button>
-                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true)} />
-            </View>
+            
         </>
         )
-    }
+    }   
+
+    console.log(questions,'hey')
 
     function showSubmitButton(){
-        console.log('done')
+        // setScore(correctQuestionsArray.length+1)
+        // navigation.navigate('Success')
+        console.log('hey')
+
     }
 
 
@@ -108,12 +108,27 @@ export default function QuizScreen({navigation,route}){
             scrollEnabled={false}
             renderItem={renderOption}
             firstItem={1}     
-            sliderWidth={350}
+            sliderWidth={responsiveWidth(100)}
             snapToPrev={animated = true, fireCallback = true}
             snapToNext={animated = true, fireCallback = true}
-            itemWidth={350}
+            itemWidth={responsiveWidth(100)}
+            removeClippedSubviews={false}
+            useScrollView
+            onSnapToItem={i =>{
+                if(i+1<questions.length){
+                    setButtonShow(true)
+                }else{
+                    setButtonShow(false)
+                }
+            }}
+            activeSlideOffset={40}
             />
         </View>
+        <View style={styles.doneBtn}>
+                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true)} />        
+                <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={showSubmitButton}>Submit</Button>
+                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true)} />
+            </View>
         <View style={styles.creator}>
             <Text style={{color:'green',fontSize:14,fontStyle:'italic'}}>&#xA9;Masquerade</Text>
         </View>
@@ -139,7 +154,8 @@ var styles=StyleSheet.create({
         borderRadius:30,
         paddingTop:30,
         marginLeft:10,
-        height:responsiveHeight(60)
+        height:responsiveHeight(60),
+        marginRight:10
     },
     option:{
         height:responsiveHeight(40),

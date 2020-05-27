@@ -41,25 +41,7 @@ export default function LoginScreen({navigation}) {
     setUser(user);
   }
 
-<<<<<<< HEAD
-     async function Login(){
-        try{
-            await auth().signInWithEmailAndPassword(email,password)
-        }catch(error){
-          showMessage({
-            message:'Error',
-            description: 'Invalid credentials !!! Please try again !',  
-            type: 'Cutstom',
-            backgroundColor:'none',
-            color: "white", // text color
-          });
-      }
-=======
-  useEffect(() => {
-    let subscribe = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscribe;
-  }, []);
->>>>>>> a61dc0e07df3327e07bf238bbc24683012f0e921
+
 
   async function Login() {
     try {

@@ -34,8 +34,9 @@ export default function QuizScreen({navigation,route}){
         }else{
             setQuestions(phpQuestions);
         }
-    },[])
 
+    },[])
+    
    const checkAnswer= (id,item)=>{
        let correct = item.item.correctAnswer.id === id;
        console.log(id)
@@ -82,10 +83,11 @@ export default function QuizScreen({navigation,route}){
     }
 
     function showSubmitButton(){
-        navigation.navigate('Success')
+        console.log(score);
+
+        navigation.navigate('Success',{score:correctQuestionsArray.length})
     }
 
-    console.log(correctQuestionsArray);
 
     return(
     <SafeAreaView style={styles.container}>
@@ -98,7 +100,6 @@ export default function QuizScreen({navigation,route}){
             data={questions}
             scrollEnabled={false}
             renderItem={renderOption}
-            firstItem={1}     
             sliderWidth={responsiveWidth(100)}
             snapToPrev={animated = true, fireCallback = true}
             snapToNext={animated = true, fireCallback = true}

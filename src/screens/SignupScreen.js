@@ -45,25 +45,8 @@ export default function SignupsScreen({navigation}) {
     setRefreshing(false);
   }, []);
 
-<<<<<<< HEAD
-      try{
-            await auth().createUserWithEmailAndPassword(email,password)
-        }catch(error){
-          showMessage({
-            message:'Error',
-            description: 'Invalid credentials !!! Please try again !',  
-            type: 'Cutstom',
-            backgroundColor:'none',
-            color: "white", // text color
-          });        }
-=======
+
   async function onCreateAccount() {
-    // if(!email||!password){
-    //   let error = getErrorMessage();
-    //     setErrorMessage(error)
-    //   return;
-    // }
->>>>>>> a61dc0e07df3327e07bf238bbc24683012f0e921
 
     try {
       await auth().createUserWithEmailAndPassword(email, password);

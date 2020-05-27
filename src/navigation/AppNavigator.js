@@ -60,7 +60,7 @@ export default function Navigation({navigation}) {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />   
         <Stack.Screen name="Success" component={SuccessScreen} />   
-        {/* <Stack.Screen name="Enter" component={EnterQuestion} />  */}
+        <Stack.Screen name="Enter" component={EnterQuestion} /> 
       </Stack.Navigator>
     )
   }
