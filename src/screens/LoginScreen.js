@@ -44,7 +44,7 @@ export default function LoginScreen({navigation}) {
 
      async function Login(){
         try{
-            await auth().signInWithEmailAndPassword(email,password).then(()=>navigation.navigate('Home'))
+            await auth().signInWithEmailAndPassword(email,password)
         }catch(error){
           showMessage({
             message:'Error',

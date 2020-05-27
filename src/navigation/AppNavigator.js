@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import QuizScreen from '../screens/QuizScreen';
 import FormScreen from '../screens/FormScreen';
 import EnterQuestion from '../screens/EnterQuestions';
+import SuccessScreen from '../screens/SuccessScreen';
 import auth from '@react-native-firebase/auth';
 import {
   createDrawerNavigator,
@@ -17,6 +18,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Quiz from '../screens/Quiz';
 
 
 
@@ -36,7 +38,6 @@ export default function Navigation({navigation}) {
     }
   },[navigation]);
 
-  console.log(userToken);
  
   async function signOut(){
     await auth().signOut()
@@ -58,7 +59,8 @@ export default function Navigation({navigation}) {
       <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />   
-        <Stack.Screen name="Enter" component={EnterQuestion} /> 
+        <Stack.Screen name="Success" component={SuccessScreen} />   
+        {/* <Stack.Screen name="Enter" component={EnterQuestion} />  */}
       </Stack.Navigator>
     )
   }

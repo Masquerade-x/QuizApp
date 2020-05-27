@@ -76,16 +76,19 @@ export default function QuizScreen({navigation,route}){
                     </TouchableOpacity>
                 </View>
             </View>
-            
+            <View style={styles.doneBtn}>
+                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true)} />        
+                <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={showSubmitButton}>Submit</Button>
+                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true)} />
+            </View>
         </>
         )
     }
 
     function showSubmitButton(){
-        navigation.navigate('Success')
+        console.log('done')
     }
 
-    console.log(correctQuestionsArray);
 
     return(
     <SafeAreaView style={styles.container}>
@@ -99,27 +102,12 @@ export default function QuizScreen({navigation,route}){
             scrollEnabled={false}
             renderItem={renderOption}
             firstItem={1}     
-            sliderWidth={responsiveWidth(100)}
+            sliderWidth={350}
             snapToPrev={animated = true, fireCallback = true}
             snapToNext={animated = true, fireCallback = true}
-            itemWidth={responsiveWidth(100)}
-            removeClippedSubviews={false}
-            useScrollView
-            onSnapToItem={i =>{
-                if(i+1<questions.length){
-                    setButtonShow(true)
-                }else{
-                    setButtonShow(false)
-                }
-            }}
-            activeSlideOffset={40}
+            itemWidth={350}
             />
         </View>
-        <View style={styles.doneBtn}>
-                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true)} />        
-                <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={showSubmitButton}>Submit</Button>
-                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true)} />
-            </View>
         <View style={styles.creator}>
             <Text style={{color:'green',fontSize:14,fontStyle:'italic'}}>&#xA9;Masquerade</Text>
         </View>
@@ -145,8 +133,7 @@ var styles=StyleSheet.create({
         borderRadius:30,
         paddingTop:30,
         marginLeft:10,
-        height:responsiveHeight(60),
-        marginRight:10
+        height:responsiveHeight(60)
     },
     option:{
         height:responsiveHeight(40),

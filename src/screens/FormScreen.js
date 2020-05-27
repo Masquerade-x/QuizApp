@@ -28,7 +28,6 @@ export default function FormScreen({navigation}){
     useEffect(()=>{
      let unsubscribe = auth().onAuthStateChanged(async user=>{
          if(user){
-             console.log(user);
              setUserUid(user.uid);
              database().ref(`/users/${user.uid}`)
              .set({

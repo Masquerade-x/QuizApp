@@ -45,7 +45,7 @@ export default function SignupsScreen({navigation}){
       // }       
 
       try{
-            await auth().createUserWithEmailAndPassword(email,password).then(()=>navigation.navigate('Form'))
+            await auth().createUserWithEmailAndPassword(email,password)
         }catch(error){
           showMessage({
             message:'Error',

@@ -6,7 +6,7 @@ import { responsiveWidth } from 'react-native-responsive-dimensions';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import Navigation from '../navigation/AppNavigator';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -17,10 +17,11 @@ export default function FormScreen({navigation}){
     function questionDataAdd(values){
 
         setQuestions(old=>[...old,values]);
-        
+
     }
 
     async function uploadQuestions(){
+        
         try{
             await database().ref(`/data/`)
             .update({
@@ -31,12 +32,13 @@ export default function FormScreen({navigation}){
         }
 
     }
-  
+    
+    console.log(questions);
+
     useEffect(()=>{
 
      let unsubscribe = auth().onAuthStateChanged(async user=>{
          if(user){
-             console.log(user);
              setUserUid(user.uid);
              database().ref(`/users/${user.uid}`)
              .set({
@@ -50,73 +52,95 @@ export default function FormScreen({navigation}){
      }
     },[])
 
-    console.log(questions)
 
     return(
-        <Formik  initialValues={{question:'',optionA:'',optionB:'',optionC:'',optionD:'',answer:''}}
+        <ScrollView style={styles.scroll} >
+        <Formik  initialValues={{question:'',options:{optionA:'',optionB:'',optionC:'',optionD:''},answer:''}}
         onSubmit={values=>questionDataAdd(values)}>
             {({handleChange,handleSubmit,values})=>(
+                <>
+                 <View style={styles.topbar}>
+                    <Button icon="check-outline" mode="contained" style={styles.btn} onPress={handleSubmit} />
+                       
+                 </View>
                 <View style={styles.formik}>
                     <TextInput label='Question'
                                 style={styles.textInput}
-                                mode='outlined'
+                                placeholder='Enter Question'
                                 onChangeText={handleChange('question')}
                                 value={values.question}
                     />
                      <TextInput label='optionA'
                                 style={styles.textInput}
-                                mode='outlined'
-                                onChangeText={handleChange('optionA')}
+                                placeholder='Enter option'
+                                onChangeText={handleChange('options.optionA')}
                                 value={values.optionA}
                     />
                      <TextInput label='optionB'
                                 style={styles.textInput}
-                                mode='outlined'
-                                 onChangeText={handleChange('optionB')}
+                                placeholder='Enter option'
+                                 onChangeText={handleChange('options.optionB')}
                                  value={values.optionB}
                     />
                      <TextInput label='optionC'
                                 style={styles.textInput}
-                                mode='outlined'
-                                onChangeText={handleChange('optionC')}
+                                placeholder='Enter option'
+                                onChangeText={handleChange('options.optionC')}
                                 value={values.optionC}
                     />
                      <TextInput label='optionD'
                                 style={styles.textInput}
-                                mode='outlined'
-                                onChangeText={handleChange('optionD')}
+                                placeholder='Enter option'
+                                onChangeText={handleChange('options.optionD')}
                                 value={values.optionD}
                     />
                      <TextInput label='answer'
                                 style={styles.textInput}
-                                mode='outlined'
+                                placeholder='Enter answer'
                                 onChangeText={handleChange('answer')}
                                 value={values.answer}
                     />
-                    <Button icon="camera" mode="contained" style={styles.btn} onPress={handleSubmit}>
-                        Submit
-                    </Button>  
-                    <TouchableOpacity onPress={uploadQuestions} style={styles.touch}>
-                        <Text>Upload Data</Text>
-                    </TouchableOpacity>
+                    
+                    <Button icon="upload" mode="contained" style={styles.btn2} onPress={uploadQuestions}>
+                        Upload
+                    </Button>
+
                 </View>
+                </>
             )
             }
-        </Formik>
+            </Formik>
+            </ScrollView>
     )
 }
 
 let styles= StyleSheet.create({
+    scroll:{
+        flex:1,
+    },
     formik:{
+        flex:1,
         justifyContent:'center',
         alignItems:'center',
         marginTop:40
     },
+    topbar:{
+        justifyContent:'flex-start',
+        alignItems:'flex-end',
+    },
     textInput:{
         width:responsiveWidth(80),
         marginTop:40,
+        borderBottomColor:'black',
+        borderBottomWidth:1
     },
     btn:{
-        marginTop:40
+        marginRight:10,
+        marginTop:10,
+    },
+    btn2:{
+        marginRight:10,
+        marginTop:28,
+
     }
 })

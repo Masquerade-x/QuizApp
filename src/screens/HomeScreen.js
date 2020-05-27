@@ -31,8 +31,8 @@ export default function HomeScreen({navigation}){
                 <IconButton  icon="menu" color={Colors.green500} size={25} onPress={() => navigation.toggleDrawer()} />
             </View>
             <View style={styles.welcome}>
-                <Text style={{fontSize:28}}>Welcome to the Quiz!!!</Text>
-                <Text style={{fontSize:28}}>Cheating ends here!</Text>
+                <Text style={{fontSize:28,color:'green'}}>Welcome to the Quiz!!!</Text>
+                <Text style={{fontSize:28,color:'green'}}>Cheating ends here!</Text>
             </View>
             <View style={styles.languages}>
             <List.Section >
