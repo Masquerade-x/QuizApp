@@ -5,7 +5,7 @@ import {
     responsiveHeight,
     responsiveWidth,
       } from "react-native-responsive-dimensions";
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity,TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Carousel from 'react-native-snap-carousel';
 import reactQuestions from '../questions/reactQuestions';
 import phpQuestions from'../questions/phpQuestions';
@@ -25,6 +25,7 @@ export default function QuizScreen({navigation,route}){
     let[refreshing,setRefreshing]=useState(false);
     let[correctQuestionsArray,setCorrectQuestionsArray]=useState([]);
     let[buttonShow,setButtonShow]=useState(true);
+    let[disableChoice,setDisableChoice]=useState(false);
 
 
     useEffect(()=>{
@@ -36,21 +37,25 @@ export default function QuizScreen({navigation,route}){
         }
     },[])
 
-    useEffect(async()=>{
+    // useEffect(async()=>{
 
-        if(route.params.subject ==='React'){
-            try{
-                await database().ref(`data/questions/`).once('value')
-                .then(snapshot=>{
-                    setQuestions(snapshot.val())
-                });
-            }catch(error){
-                console.log(error);
-            }
-        }
-    },[])
+    //     if(route.params.subject ==='React'){
+    //         try{
+    //             await database().ref(`data/questions/`).once('value')
+    //             .then(snapshot=>{
+    //                 setQuestions(snapshot.val())
+    //             });
+    //         }catch(error){
+    //             console.log(error);
+    //         }
+    //     }
+    // },[])
     
    const checkAnswer= (id,item)=>{
+
+       if(!disableChoice){
+            setDisableChoice(true)
+       }
        let correct = item.item.correctAnswer.id === id;
        console.log(id)
        correct ? correctAnswer(id) : wrongAnswer(id)
@@ -63,6 +68,7 @@ export default function QuizScreen({navigation,route}){
     }
 
     function wrongAnswer(id){
+        console.log('hey')
         setCurrentQuestionIndex(currentQuestionIndex +1),
         setNoOfAnsweredQuestion(noOfAnsweredQuestion+1)
     }
@@ -76,21 +82,20 @@ export default function QuizScreen({navigation,route}){
             <View style={styles.card}>
               <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.question}</Text>
                 <View style={styles.option}>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[0].id,item)}>
+                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[0].id,item)}>
                         <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[0].option}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[1].id,item)}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[1].id,item)}>
                         <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[1].option}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[2].id,item)}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[2].id,item)}>
                         <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[2].option}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.touch} onPress={()=>checkAnswer(item.item.options[3].id,item)}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[3].id,item)}>
                         <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[3].option}</Text>
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
-            
         </>
         )
     }
@@ -130,9 +135,9 @@ export default function QuizScreen({navigation,route}){
             />
         </View>
         <View style={styles.doneBtn}>
-                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true)} />        
+                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true,setDisableChoice(false))} />        
                 <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={showSubmitButton}>Submit</Button>
-                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true)} />
+                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true,setDisableChoice(false))} />
             </View>
         <View style={styles.creator}>
             <Text style={{color:'green',fontSize:14,fontStyle:'italic'}}>&#xA9;Masquerade</Text>
