@@ -117,7 +117,6 @@ export default function QuizScreen({navigation,route}){
             data={questions}
             scrollEnabled={false}
             renderItem={renderOption}
-            firstItem={1}     
             sliderWidth={responsiveWidth(100)}
             snapToPrev={animated = true, fireCallback = true}
             snapToNext={animated = true, fireCallback = true}
