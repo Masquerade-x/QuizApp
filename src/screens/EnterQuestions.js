@@ -55,7 +55,7 @@ export default function FormScreen({navigation}){
 
     return(
         <ScrollView style={styles.scroll} >
-        <Formik  initialValues={{question:'',options:{optionA:'',optionB:'',optionC:'',optionD:''},answer:''}}
+        <Formik  initialValues={{question:'',options:[{id:1,optionA:''},{id:2,optionB:''},{id:3,optionC:''},{id:4,optionD:''}],answer:''}}
         onSubmit={values=>questionDataAdd(values)}>
             {({handleChange,handleSubmit,values})=>(
                 <>

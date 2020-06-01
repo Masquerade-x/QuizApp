@@ -10,22 +10,19 @@ import Carousel from 'react-native-snap-carousel';
 import reactQuestions from '../questions/reactQuestions';
 import phpQuestions from'../questions/phpQuestions';
 import {  IconButton,Button,Colors } from 'react-native-paper';
+import Options from '../Components/Options';
 
 
 export default function QuizScreen({navigation,route}){
-    let[questions,setQuestions]=useState([])
-    let[noOfQuestion,setNoOfQuestion]=useState(1)
-    let[noOfAnsweredQuestion,setNoOfAnsweredQuestion]=useState(0)
-    let[currentQuestionIndex,setCurrentQuestionIndex]=useState(0)
-    let[score,setScore]=useState(0)
-    let[correctAnswers,setCorrectAnswers]=useState(0)
-    let[wrongAnswers,setWrongAnswers]=useState(0)
+    let[questions,setQuestions]=useState([]);
+    let[noOfQuestion,setNoOfQuestion]=useState(1);
     let[choice,setChoice]=useState('');
     let carouselRef = useRef('');
     let[refreshing,setRefreshing]=useState(false);
-    let[correctQuestionsArray,setCorrectQuestionsArray]=useState([]);
     let[buttonShow,setButtonShow]=useState(true);
     let[disableChoice,setDisableChoice]=useState(false);
+    let[disableNext,setDisableNext]=useState(true);
+    let[optionArray,setOptionArray]=useState([]);
 
 
     useEffect(()=>{
@@ -37,107 +34,31 @@ export default function QuizScreen({navigation,route}){
         }
     },[])
 
-    // useEffect(async()=>{
-
-    //     if(route.params.subject ==='React'){
-    //         try{
-    //             await database().ref(`data/questions/`).once('value')
-    //             .then(snapshot=>{
-    //                 setQuestions(snapshot.val())
-    //             });
-    //         }catch(error){
-    //             console.log(error);
-    //         }
-    //     }
-    // },[])
     
-   const checkAnswer= (id,item)=>{
-
-       if(!disableChoice){
-            setDisableChoice(true)
-       }
-       let correct = item.item.correctAnswer.id === id;
-       console.log(id)
-       correct ? correctAnswer(id) : wrongAnswer(id)
-   }
-
-   function correctAnswer(id){
-    setCurrentQuestionIndex(currentQuestionIndex +1),
-    setNoOfAnsweredQuestion(noOfAnsweredQuestion+1),
-    setCorrectQuestionsArray(oldArray=>[...oldArray,id])
+    function submit(){
+        console.log('submitted');   
     }
 
-    function wrongAnswer(id){
-        console.log('hey')
-        setCurrentQuestionIndex(currentQuestionIndex +1),
-        setNoOfAnsweredQuestion(noOfAnsweredQuestion+1)
+    useEffect(()=>{
+        console.log(optionArray);
+    })
+
+    function nextQuestion(){
+        setOptionArray(oldArray=>[...oldArray,currentOption])
+        carouselRef.snapToNext(animated = true, fireCallback = true)
+
     }
-
-    console.log(correctQuestionsArray);
-
-   const renderOption=(item)=>{
-       console.log(item);
-        return(
-        <>
-            <View style={styles.card}>
-              <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.question}</Text>
-                <View style={styles.option}>
-                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[0].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[0].option}</Text>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[1].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[1].option}</Text>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[2].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[2].option}</Text>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback style={styles.touch} disabled={disableChoice} onPress={()=>checkAnswer(item.item.options[3].id,item)}>
-                        <Text style={{fontSize:20,color:'white',marginLeft:23}}>{item.item.options[3].option}</Text>
-                    </TouchableWithoutFeedback>
-                </View>
-            </View>
-        </>
-        )
-    }
-
-    function showSubmitButton(){
-        navigation.navigate('Success')
-    }
-
-    console.log(correctQuestionsArray);
 
     return(
     <SafeAreaView style={styles.container}>
         <View style={styles.dash}>
             <Text style={{fontSize:24,color:'green',marginRight:20}}>No of questions:{noOfQuestion}</Text>
         </View>
-        <View style={styles.slide}>
-            <Carousel 
-            ref={(c)=>carouselRef=c}
-            data={questions}
-            scrollEnabled={false}
-            renderItem={renderOption}
-            sliderWidth={responsiveWidth(100)}
-            snapToPrev={animated = true, fireCallback = true}
-            snapToNext={animated = true, fireCallback = true}
-            itemWidth={responsiveWidth(100)}
-            removeClippedSubviews={false}
-            useScrollView
-            onSnapToItem={i =>{
-                if(i+1<questions.length){
-                    setButtonShow(true)
-                }else{
-                    setButtonShow(false)
-                }
-            }}
-            activeSlideOffset={40}
-            />
-        </View>
+        <Options data={questions}  style={styles.carousel}/>
         <View style={styles.doneBtn}>
-                <IconButton icon="arrow-left-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToPrev(animated = true, fireCallback = true,setDisableChoice(false))} />        
-                <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={showSubmitButton}>Submit</Button>
-                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} size={50} onPress={()=>carouselRef.snapToNext(animated = true, fireCallback = true,setDisableChoice(false))} />
-            </View>
+                <Button icon="check-outline" mode="contained" disabled={buttonShow} style={styles.btn} onPress={submit}>Submit</Button>
+                <IconButton icon="arrow-right-bold-circle" color={Colors.green500} style={styles.iconBtn} size={50} onPress={nextQuestion} />
+        </View> 
         <View style={styles.creator}>
             <Text style={{color:'green',fontSize:14,fontStyle:'italic'}}>&#xA9;Masquerade</Text>
         </View>
@@ -155,32 +76,6 @@ var styles=StyleSheet.create({
         color:'black',
       
     },
-    card:{
-        backgroundColor:'green',
-        borderRadius:5,
-        alignItems:'center',
-        marginTop:60,
-        borderRadius:30,
-        paddingTop:30,
-        marginLeft:10,
-        height:responsiveHeight(60),
-        marginRight:10
-    },
-    option:{
-        height:responsiveHeight(40),
-        marginTop:35,
-        justifyContent:'space-evenly',
-        alignItems:'flex-start',
-        alignSelf:'flex-start'
-    },
-    touch:{
-      width:responsiveWidth(60),
-    },
-    slide:{
-        flex: 4, 
-        flexDirection:'row', 
-        justifyContent: 'center',
-    },
     dash:{
         alignItems:'flex-end',
         marginBottom:20
@@ -192,9 +87,15 @@ var styles=StyleSheet.create({
     },
     doneBtn:{
         flexDirection:'row',
-        justifyContent:'space-between',
+        justifyContent:'center',
         alignItems:'center',
         marginBottom:30,
+    },
+    btn:{
+        left:45
+    },
+    iconBtn:{
+        left:90
     }
     
 })
