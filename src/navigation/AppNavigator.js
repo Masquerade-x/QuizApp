@@ -8,8 +8,8 @@ import LoginScreen from '../screens/LoginScreen'
 import SignupScreen from '../screens/SignupScreen';
 import HomeScreen from '../screens/HomeScreen';
 import QuizScreen from '../screens/QuizScreen';
-import FormScreen from '../screens/FormScreen';
-import EnterQuestion from '../screens/EnterQuestions';
+import FormScreen from '../extraFiles/FormScreen';
+import EnterQuestion from '../extraFiles/EnterQuestions';
 import SuccessScreen from '../screens/SuccessScreen';
 import auth from '@react-native-firebase/auth';
 import {
@@ -18,7 +18,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Quiz from '../screens/Quiz';
+import Quiz from '../extraFiles/Quiz';
 
 
 
