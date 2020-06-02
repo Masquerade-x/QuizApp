@@ -7,6 +7,8 @@ import {
   RefreshControl,
   ScrollView,
   ImageBackground,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import {
   responsiveHeight,
@@ -66,6 +68,9 @@ export default function LoginScreen({navigation}) {
       <ImageBackground
         source={require('../assets/green.jpg')}
         style={styles.img}>
+      <KeyboardAvoidingView 
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      contentContainerStyle={styles.keyboard}>
         <View style={styles.title}>
           <Text style={{color: 'white', fontSize: 40}}>Login</Text>
         </View>
@@ -120,6 +125,7 @@ export default function LoginScreen({navigation}) {
             &#xA9;Masquerade
           </Text>
         </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
     </ScrollView>
   );
@@ -131,6 +137,9 @@ let styles = StyleSheet.create({
   },
   img: {
     flex: 1,
+  },
+  keyboard:{
+    flex:1
   },
   title: {
     alignItems: 'center',
