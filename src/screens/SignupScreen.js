@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import {
   responsiveHeight,
@@ -82,7 +81,6 @@ export default function SignupsScreen({navigation}) {
               autoCapitalize="none"
               value={email}
             />
-            <View style={[styles.line, styles.linePlace1]} />
             <View style={[styles.circle, styles.semicircle]} />
           </View>
           <View style={styles.password}>
@@ -96,9 +94,7 @@ export default function SignupsScreen({navigation}) {
               autoCapitalize="none"
               value={password}
             />
-            <View style={[styles.line, styles.linePlace2]} />
             <View style={[styles.circle2, styles.semicircle]} />
-            <View style={[styles.line, styles.linePlace3]} />
           </View>
           <View style={styles.btn}>
             <TouchableOpacity onPress={onCreateAccount} style={styles.touch}>
@@ -122,6 +118,7 @@ let styles = StyleSheet.create({
   form: {
     flex: 5,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   error: {
     flex: 1,
@@ -130,57 +127,45 @@ let styles = StyleSheet.create({
   },
   email: {
     alignItems: 'center',
-    marginBottom: 25,
+    padding: 30,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    width: responsiveWidth(60),
+    borderColor: 'white',
   },
   password: {
     alignItems: 'center',
-    marginBottom: 40,
+    padding: 30,
+    borderBottomWidth: 2,
+    width: responsiveWidth(60),
+    borderColor: 'white',
   },
   textInput: {
-    width: responsiveWidth(70),
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
-  },
-  line: {
-    height: 2,
-    backgroundColor: 'white',
-  },
-  linePlace1: {
-    width: responsiveWidth(73),
-    top: -64,
-    right: 16,
-  },
-  linePlace2: {
-    width: responsiveWidth(65),
-    top: -62,
-    left: 1,
-  },
-  linePlace3: {
-    width: responsiveWidth(72),
-    top: 14,
-    left: 15,
   },
   circle: {
     borderTopRightRadius: 60,
     borderBottomRightRadius: 60,
     borderLeftWidth: 0,
-    right: 30,
-    top: -15.2,
+    right: -responsiveWidth(10),
+    top: 0,
   },
   circle2: {
     borderTopLeftRadius: 60,
     borderBottomLeftRadius: 60,
     borderRightWidth: 0,
-    left: 32,
-    top: -13,
+    left: -responsiveWidth(10),
+    top: 0,
   },
   semicircle: {
-    width: responsiveWidth(10),
-    height: 80,
+    width: responsiveWidth(20),
     borderColor: 'white',
     borderWidth: 2,
     position: 'absolute',
+    top: -2,
+    bottom: -2,
   },
   btn: {
     justifyContent: 'center',

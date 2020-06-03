@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 
 import {
   responsiveHeight,
@@ -35,6 +36,17 @@ export default function QuizScreen({navigation, route}) {
   useEffect(() => {
     if (index === questions.length) {
       navigation.navigate('Success', {data: optionArray});
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            {
+              name: 'Success',
+              params: {data: optionArray},
+            },
+          ],
+        }),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [optionArray]);

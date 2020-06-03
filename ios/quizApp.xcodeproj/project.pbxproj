@@ -19,6 +19,7 @@
 		3D1975973124609272CB3FEB /* libPods-quizApp-quizAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB387A5BB08549B10F68D845 /* libPods-quizApp-quizAppTests.a */; };
 		4010CFB32E2F3219BEAFC103 /* libPods-quizApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA02A06666503D56FBA247 /* libPods-quizApp.a */; };
 		A6F8458E86221778BB5AF775 /* libPods-quizApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0ABFEE6F0D520578523F42 /* libPods-quizApp-tvOS.a */; };
+		AE46BAE92487A7AF0064216E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE46BAE82487A7AF0064216E /* GoogleService-Info.plist */; };
 		DE53F4691AB1C2AB8D507E1B /* libPods-quizApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 792AB1AA3E789A38750CE93C /* libPods-quizApp-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		872CC02C0E772782E9061A9A /* Pods-quizApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-quizApp-tvOSTests/Pods-quizApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		8EF7CFC9A1371DEFE9412BF1 /* Pods-quizApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizApp.debug.xcconfig"; path = "Target Support Files/Pods-quizApp/Pods-quizApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3E0FAA461E6A71AC0B594E /* Pods-quizApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-quizApp-tvOS/Pods-quizApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		AE46BAE82487A7AF0064216E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6708668C0E1CF35D109E850 /* Pods-quizApp-quizAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizApp-quizAppTests.debug.xcconfig"; path = "Target Support Files/Pods-quizApp-quizAppTests/Pods-quizApp-quizAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB387A5BB08549B10F68D845 /* libPods-quizApp-quizAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quizApp-quizAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFD380C4346414FFA178BBD /* Pods-quizApp-quizAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quizApp-quizAppTests.release.xcconfig"; path = "Target Support Files/Pods-quizApp-quizAppTests/Pods-quizApp-quizAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,7 +163,6 @@
 				C8A5855FA58F57E508234150 /* Pods-quizApp-tvOSTests.debug.xcconfig */,
 				872CC02C0E772782E9061A9A /* Pods-quizApp-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,6 +176,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				AE46BAE82487A7AF0064216E /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* quizApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* quizAppTests */,
@@ -343,6 +345,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				AE46BAE92487A7AF0064216E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

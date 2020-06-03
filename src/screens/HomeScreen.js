@@ -1,5 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {RefreshControl, ScrollView, Text, View, StyleSheet} from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import {List, Colors, IconButton} from 'react-native-paper';
 import {
   responsiveWidth,
@@ -21,11 +28,7 @@ export default function HomeScreen({navigation}) {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollView}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.topbar}>
         <IconButton
           icon="menu"
@@ -57,7 +60,7 @@ export default function HomeScreen({navigation}) {
           </List.Accordion>
         </List.Section>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

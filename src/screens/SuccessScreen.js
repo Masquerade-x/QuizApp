@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, SafeAreaView, View, StyleSheet} from 'react-native';
 import {Colors, IconButton} from 'react-native-paper';
 import reactQuestions from '../questions/reactQuestions.json';
 
@@ -23,7 +23,7 @@ export default function Success({navigation, route}) {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
         <IconButton
           icon="menu"
@@ -37,7 +37,7 @@ export default function Success({navigation, route}) {
           Your Score is {finalScore}
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
