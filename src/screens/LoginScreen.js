@@ -8,7 +8,7 @@ import {
   ScrollView,
   ImageBackground,
   KeyboardAvoidingView,
-  Platform
+  Platform,
 } from 'react-native';
 import {
   responsiveHeight,
@@ -18,7 +18,6 @@ import {
 import auth from '@react-native-firebase/auth';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {showMessage, hideMessage} from 'react-native-flash-message';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function LoginScreen({navigation}) {
   let [email, setEmail] = useState('');
@@ -43,8 +42,6 @@ export default function LoginScreen({navigation}) {
     setUser(user);
   }
 
-
-
   async function Login() {
     try {
       await auth().signInWithEmailAndPassword(email, password);
@@ -68,63 +65,64 @@ export default function LoginScreen({navigation}) {
       <ImageBackground
         source={require('../assets/green.jpg')}
         style={styles.img}>
-      <KeyboardAvoidingView 
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-      contentContainerStyle={styles.keyboard}>
-        <View style={styles.title}>
-          <Text style={{color: 'white', fontSize: 40}}>Login</Text>
-        </View>
-        <View style={styles.form}>
-          <View style={styles.email}>
-            <TextInput
-              label="Email"
-              style={styles.textInput}
-              placeholderTextColor="white"
-              placeholderTextSize="40"
-              onChangeText={e => setEmail(e)}
-              placeholder="Enter Email"
-              autoCapitalize="none"
-              value={email}
-            />
-            <View style={[styles.line, styles.linePlace1]} />
-            <View style={[styles.circle, styles.semicircle]} />
+        <KeyboardAvoidingView
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+          contentContainerStyle={styles.keyboard}>
+          <View style={styles.title}>
+            <Text style={{color: 'white', fontSize: 40}}>Login</Text>
           </View>
-          <View style={styles.password}>
-            <TextInput
-              label="Password"
-              style={styles.textInput}
-              secureTextEntry
-              placeholderTextColor="white"
-              placeholder="Enter Password"
-              onChangeText={pass => setPassword(pass)}
-              autoCapitalize="none"
-              value={password}
-            />
-            <View style={[styles.line, styles.linePlace2]} />
-            <View style={[styles.circle2, styles.semicircle]} />
-            <View style={[styles.line, styles.linePlace3]} />
-            <View style={[styles.circle3, styles.semicircle]} />
+          <View style={styles.form}>
+            <View style={styles.email}>
+              <TextInput
+                label="Email"
+                style={styles.textInput}
+                placeholderTextColor="white"
+                placeholderTextSize="40"
+                onChangeText={e => setEmail(e)}
+                placeholder="Enter Email"
+                autoCapitalize="none"
+                value={email}
+              />
+              <View style={[styles.line, styles.linePlace1]} />
+              <View style={[styles.circle, styles.semicircle]} />
+            </View>
+            <View style={styles.password}>
+              <TextInput
+                label="Password"
+                style={styles.textInput}
+                secureTextEntry
+                placeholderTextColor="white"
+                placeholder="Enter Password"
+                onChangeText={pass => setPassword(pass)}
+                autoCapitalize="none"
+                value={password}
+              />
+              <View style={[styles.line, styles.linePlace2]} />
+              <View style={[styles.circle2, styles.semicircle]} />
+              <View style={[styles.line, styles.linePlace3]} />
+              <View style={[styles.circle3, styles.semicircle]} />
+            </View>
+            <View style={styles.btnText}>
+              <TouchableOpacity onPress={Login} style={styles.touch}>
+                <Text style={{fontSize: 22, color: 'white'}}>Login</Text>
+              </TouchableOpacity>
+              <View style={[styles.line, styles.linePlace4]} />
+            </View>
+            <View style={styles.join}>
+              <TouchableOpacity
+                style={styles.joinBtn}
+                onPress={() => navigation.navigate('Signup')}>
+                <Text style={{color: 'white', fontSize: 25}}>Join Us !</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.btnText}>
-            <TouchableOpacity onPress={Login} style={styles.touch}>
-              <Text style={{fontSize: 22, color: 'white'}}>Login</Text>
-            </TouchableOpacity>
-            <View style={[styles.line, styles.linePlace4]} />
-          </View>
-          <View style={styles.join}>
-            <TouchableOpacity
-              style={styles.joinBtn}
-              onPress={() => navigation.navigate('Signup')}>
-              <Text style={{color: 'white', fontSize: 25}}>Join Us !</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        <View styles={styles.owner}>
-          <Text style={{alignSelf: 'flex-end', color: 'white', marginEnd: 10}}>
-            &#xA9;Masquerade
-          </Text>
-        </View>
+          <View styles={styles.owner}>
+            <Text
+              style={{alignSelf: 'flex-end', color: 'white', marginEnd: 10}}>
+              &#xA9;Masquerade
+            </Text>
+          </View>
         </KeyboardAvoidingView>
       </ImageBackground>
     </ScrollView>
@@ -138,8 +136,8 @@ let styles = StyleSheet.create({
   img: {
     flex: 1,
   },
-  keyboard:{
-    flex:1
+  keyboard: {
+    flex: 1,
   },
   title: {
     alignItems: 'center',

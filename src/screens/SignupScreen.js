@@ -21,7 +21,6 @@ import {showMessage, hideMessage} from 'react-native-flash-message';
 export default function SignupsScreen({navigation}) {
   let [password, setPassword] = useState('');
   let [email, setEmail] = useState('');
-  let [name, setName] = useState('');
   let [errorMessage, setErrorMessage] = useState('');
   let [refreshing, setRefreshing] = useState(false);
 
@@ -45,9 +44,7 @@ export default function SignupsScreen({navigation}) {
     setRefreshing(false);
   }, []);
 
-
   async function onCreateAccount() {
-
     try {
       await auth().createUserWithEmailAndPassword(email, password);
     } catch (error) {
@@ -130,9 +127,6 @@ let styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  password: {
-    marginBottom: 40,
   },
   email: {
     alignItems: 'center',

@@ -1,109 +1,102 @@
 [
-    {   
-        "id":1,
-        "question": "Everything in React is a _____________",
-        "options":[
-                {
-                    "id":1,
-                    "option":"Module"
-                },
-                {
-                    "id":2,
-                    "option": "Component"
-                },
-                {
-                    "id":3,
-                    "option": "Package"
-                },
-                {
-                    "id":4,
-                    "option": "Class"
-
-                }
-            ],
-        "correctAnswer":{
-            "id":2
-        }
+  {
+    "id": 1,
+    "question": "Everything in React is a _____________",
+    "options": [
+      {
+        "id": 1,
+        "option": "Module"
+      },
+      {
+        "id": 2,
+        "option": "Component"
+      },
+      {
+        "id": 3,
+        "option": "Package"
+      },
+      {
+        "id": 4,
+        "option": "Class"
+      }
+    ],
+    "correctAnswer": {
+      "id": 2
     }
-,
-            {
-                "id":2,
-                "question": "How many elements does a react component return?",
-                "options":[
-                    {
-                        "id":1,
-                        "option": "2 Elements"
-                    },
-                    {
-                        "id":2,
-                        "option": "1 Element"
-                    },
-                    {
-                        "id":3,
-                        "option": "Multiple Elements"
-                    },
-                    {
-                        "id":4,
-                        "option": "None of These"    
-                    }
-                ],
-                "correctAnswer":{
-                    "id":3
-                }                
-            },
-            {
-                "id":3,
-                "question": "How many elements does a react component return?",
-                "options":[
-                    {
-                        "id":1,
-                        "option": "26 Elements"
-                    },
-                    {
-                        "id":2,
-                        "option": "3 Element"
-                    },
-                    {
-                        "id":3,
-                        "option": "Multiple Elements"
-                    },
-                    {
-                        "id":4,
-                        "option": "None of These"    
-                    }
-                ],
-                "correctAnswer":{
-                    "id":1
-                }                
-            },
-            {   
-                "id":4,
-                "question": "final one",
-                "options":[
-                        {
-                            "id":1,
-                            "option":"Module"
-                        },
-                        {
-                            "id":2,
-                            "option": "Component"
-                        },
-                        {
-                            "id":3,
-                            "option": "Package"
-                        },
-                        {
-                            "id":4,
-                            "option": "Class"
-        
-                        }
-                    ],
-                "correctAnswer":{
-                    "id":4
-                }
-            }
-         
-           
-        
-    
+  },
+  {
+    "id": 2,
+    "question": "How many elements does a react component return?",
+    "options": [
+      {
+        "id": 1,
+        "option": "2 Elements"
+      },
+      {
+        "id": 2,
+        "option": "1 Element"
+      },
+      {
+        "id": 3,
+        "option": "Multiple Elements"
+      },
+      {
+        "id": 4,
+        "option": "None of These"
+      }
+    ],
+    "correctAnswer": {
+      "id": 3
+    }
+  },
+  {
+    "id": 3,
+    "question": "How many elements does a react component return?",
+    "options": [
+      {
+        "id": 1,
+        "option": "26 Elements"
+      },
+      {
+        "id": 2,
+        "option": "3 Element"
+      },
+      {
+        "id": 3,
+        "option": "Multiple Elements"
+      },
+      {
+        "id": 4,
+        "option": "None of These"
+      }
+    ],
+    "correctAnswer": {
+      "id": 1
+    }
+  },
+  {
+    "id": 4,
+    "question": "final one",
+    "options": [
+      {
+        "id": 1,
+        "option": "Module"
+      },
+      {
+        "id": 2,
+        "option": "Component"
+      },
+      {
+        "id": 3,
+        "option": "Package"
+      },
+      {
+        "id": 4,
+        "option": "Class"
+      }
+    ],
+    "correctAnswer": {
+      "id": 4
+    }
+  }
 ]

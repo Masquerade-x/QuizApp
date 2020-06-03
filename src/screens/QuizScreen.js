@@ -15,7 +15,6 @@ import Carousel from 'react-native-snap-carousel';
 import reactQuestions from '../questions/reactQuestions';
 import phpQuestions from '../questions/phpQuestions';
 import {IconButton, Button, Colors} from 'react-native-paper';
-import SuccessScreen from '../screens/SuccessScreen';
 
 export default function QuizScreen({navigation, route}) {
   let [questions, setQuestions] = useState([]);
@@ -32,6 +31,13 @@ export default function QuizScreen({navigation, route}) {
       setQuestions(phpQuestions);
     }
   }, [route.params.subject]);
+
+  useEffect(() => {
+    if (index === questions.length) {
+      navigation.navigate('Success', {data: optionArray});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optionArray]);
 
   const selectOption = (optionId, item) => {
     let selectedOption = {
@@ -51,15 +57,11 @@ export default function QuizScreen({navigation, route}) {
   function nextQuestion() {
     submitAnswer();
     carouselRef.snapToNext();
-    console.log(optionArray);
   }
 
   function submitQuiz() {
     submitAnswer();
-    console.log(optionArray);
-    // navigation.navigate('Success', {data: optionArray});
   }
-  console.log(optionArray, 'outer');
 
   const renderOption = ({item}) => {
     return (
@@ -70,7 +72,7 @@ export default function QuizScreen({navigation, route}) {
         <View style={styles.option}>
           {item.options.map(option => {
             const backgroundColorHighlighted =
-              option.id === currentOption?.optionId ? 'blue' : 'green';
+              option.id === currentOption?.optionId ? 'orange' : 'green';
 
             return (
               <TouchableOpacity
@@ -117,6 +119,7 @@ export default function QuizScreen({navigation, route}) {
       <View style={styles.doneBtn}>
         {index === questions.length && (
           <Button
+            disabled={currentOption === null ? true : false}
             icon="check-outline"
             mode="contained"
             style={styles.btn}
@@ -126,6 +129,7 @@ export default function QuizScreen({navigation, route}) {
         )}
         {index !== questions.length && (
           <IconButton
+            disabled={currentOption === null ? true : false}
             icon="arrow-right-bold-circle"
             color={Colors.green500}
             style={styles.iconBtn}
@@ -161,8 +165,10 @@ var styles = StyleSheet.create({
     marginRight: 10,
   },
   touch: {
-    borderRadius: 30,
+    marginHorizontal: 10,
+    borderRadius: 10,
     height: 40,
+    justifyContent: 'center',
   },
   option: {
     height: responsiveHeight(40),
