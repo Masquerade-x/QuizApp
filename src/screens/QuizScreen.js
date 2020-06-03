@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 
@@ -33,23 +34,31 @@ export default function QuizScreen({navigation, route}) {
     }
   }, [route.params.subject]);
 
+  function navigateAndReset(screenName) {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: screenName,
+            params: {data: optionArray},
+          },
+        ],
+      }),
+    );
+  }
+
   useEffect(() => {
     if (index === questions.length) {
-      navigation.navigate('Success', {data: optionArray});
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [
-            {
-              name: 'Success',
-              params: {data: optionArray},
-            },
-          ],
-        }),
-      );
+      navigateAndReset('Success');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [optionArray]);
+
+  function skipQuestion() {
+    setCurrentOption(null);
+    carouselRef.snapToNext();
+  }
 
   const selectOption = (optionId, item) => {
     let selectedOption = {
@@ -72,6 +81,21 @@ export default function QuizScreen({navigation, route}) {
   }
 
   function submitQuiz() {
+    if (optionArray.length === 0) {
+      Alert.alert(
+        'Submit Quiz',
+        'You have not answered any question. Do you still want to continue?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => navigateAndReset('Success')},
+          ,
+        ],
+        {cancelable: false},
+      );
+    }
     submitAnswer();
   }
 
@@ -107,7 +131,15 @@ export default function QuizScreen({navigation, route}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.dash} />
+      {index !== questions.length && (
+        <Button
+          icon="check-outline"
+          mode="contained"
+          style={styles.skipBtn}
+          onPress={skipQuestion}>
+          Skip
+        </Button>
+      )}
       <View style={styles.slide}>
         <Carousel
           ref={c => (carouselRef = c)}
@@ -127,7 +159,6 @@ export default function QuizScreen({navigation, route}) {
       <View style={styles.doneBtn}>
         {index === questions.length && (
           <Button
-            disabled={currentOption === null ? true : false}
             icon="check-outline"
             mode="contained"
             style={styles.btn}
@@ -136,14 +167,14 @@ export default function QuizScreen({navigation, route}) {
           </Button>
         )}
         {index !== questions.length && (
-          <IconButton
+          <Button
             disabled={currentOption === null ? true : false}
             icon="arrow-right-bold-circle"
-            color={Colors.green500}
-            style={styles.iconBtn}
-            size={50}
-            onPress={nextQuestion}
-          />
+            mode="contained"
+            style={styles.skipBtn}
+            onPress={nextQuestion}>
+            next
+          </Button>
         )}
       </View>
       <View style={styles.creator}>
@@ -158,6 +189,12 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  skipBtn: {
+    width: responsiveWidth(20),
+    alignSelf: 'flex-end',
+    marginRight: 10,
+    marginTop: 20,
   },
   question: {
     fontSize: 20,
@@ -187,10 +224,6 @@ var styles = StyleSheet.create({
     flex: 4,
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  dash: {
-    alignItems: 'flex-end',
-    marginBottom: 20,
   },
   creator: {
     alignItems: 'flex-end',

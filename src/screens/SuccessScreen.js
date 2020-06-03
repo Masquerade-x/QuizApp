@@ -8,7 +8,7 @@ export default function Success({navigation, route}) {
 
   useEffect(() => {
     let score = 0;
-    route.params.data.map(selected => {
+    route.params?.data.map(selected => {
       reactQuestions.map(question => {
         console.log(selected.questionId, question.id, 'inner');
         if (selected.questionId === question.id) {
@@ -33,9 +33,16 @@ export default function Success({navigation, route}) {
         />
       </View>
       <View style={styles.score}>
-        <Text style={{fontSize: 40, color: 'green'}}>
-          Your Score is {finalScore}
-        </Text>
+        {route.params?.data.length === 0 ? (
+          <Text style={{fontSize: 20, color: 'green'}}>
+            You have not answered any question thus we are not able to calculate
+            the score.
+          </Text>
+        ) : (
+          <Text style={{fontSize: 40, color: 'green'}}>
+            Your Score is {finalScore}
+          </Text>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -50,8 +57,9 @@ var styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   score: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 10,
   },
 });
