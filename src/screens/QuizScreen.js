@@ -95,11 +95,7 @@ export default function QuizScreen({navigation, route}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.dash}>
-        <Text style={{fontSize: 24, color: 'green', marginRight: 20}}>
-          No of questions:{index}
-        </Text>
-      </View>
+      <View style={styles.dash} />
       <View style={styles.slide}>
         <Carousel
           ref={c => (carouselRef = c)}
