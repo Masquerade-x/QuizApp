@@ -47,12 +47,10 @@ export default function SignupsScreen({navigation}) {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
     } catch (error) {
+      console.log(error);
       showMessage({
         message: 'Error',
-        description: 'Invalid credentials !!! Please try again !',
-        type: 'Cutstom',
-        backgroundColor: 'none',
-        color: 'white', // text color
+        description: error.message,
       });
     }
   }
