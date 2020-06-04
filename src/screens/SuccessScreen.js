@@ -10,7 +10,6 @@ export default function Success({navigation, route}) {
     let score = 0;
     route.params?.data.map(selected => {
       reactQuestions.map(question => {
-        console.log(selected.questionId, question.id, 'inner');
         if (selected.questionId === question.id) {
           if (selected.optionId === question.correctAnswer.id) {
             score++;
@@ -39,9 +38,21 @@ export default function Success({navigation, route}) {
             the score.
           </Text>
         ) : (
-          <Text style={{fontSize: 40, color: 'green'}}>
-            Your Score is {finalScore}
-          </Text>
+          <View
+            style={{
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+            }}>
+            <Text style={{fontSize: 30, color: 'green', marginVertical: 20}}>
+              Total no of questions : {reactQuestions.length}
+            </Text>
+            <Text style={{fontSize: 30, color: 'green', marginVertical: 20}}>
+              Your Score is :{finalScore}
+            </Text>
+            <Text style={{fontSize: 30, color: 'green', marginVertical: 20}}>
+              No. of wrong answers : {reactQuestions.length - finalScore}
+            </Text>
+          </View>
         )}
       </View>
     </SafeAreaView>

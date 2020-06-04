@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import QuizScreen from '../screens/QuizScreen';
 import FormScreen from '../extraFiles/FormScreen';
 import EnterQuestion from '../extraFiles/EnterQuestions';
+import ReviewScreen from '../screens/ReviewScreen';
 import SuccessScreen from '../screens/SuccessScreen';
 import auth from '@react-native-firebase/auth';
 import {
@@ -65,6 +66,7 @@ export default function Navigation({navigation}) {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />
+        <Stack.Screen name="Review" component={ReviewScreen} />
         <Stack.Screen name="Success" component={SuccessScreen} />
         <Stack.Screen name="Enter" component={EnterQuestion} />
       </Stack.Navigator>

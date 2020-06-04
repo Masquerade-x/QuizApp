@@ -24,7 +24,7 @@ export default function QuizScreen({navigation, route}) {
   let [optionArray, setOptionArray] = useState([]);
   let [currentOption, setCurrentOption] = useState(null);
   const [index, setIndex] = useState(1);
-  const [score, setScore] = useState(0);
+  const [choice, setChoice] = useState('');
 
   useEffect(() => {
     if (route.params.subject === 'React') {
@@ -34,6 +34,7 @@ export default function QuizScreen({navigation, route}) {
     }
   }, [route.params.subject]);
 
+  //clearing the stack after navigation
   function navigateAndReset(screenName) {
     navigation.dispatch(
       CommonActions.reset({
@@ -48,18 +49,21 @@ export default function QuizScreen({navigation, route}) {
     );
   }
 
+  //navigation depending on user's choice
   useEffect(() => {
     if (index === questions.length) {
       navigateAndReset('Success');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionArray]);
+  }, [optionArray, choice]);
 
+  //skip the current question
   function skipQuestion() {
     setCurrentOption(null);
     carouselRef.snapToNext();
   }
 
+  //currently selected option
   const selectOption = (optionId, item) => {
     let selectedOption = {
       optionId,
@@ -68,6 +72,7 @@ export default function QuizScreen({navigation, route}) {
     setCurrentOption(selectedOption);
   };
 
+  //to update the selected question array
   function submitAnswer() {
     if (currentOption) {
       setOptionArray(oldArray => [...oldArray, currentOption]);
@@ -75,11 +80,13 @@ export default function QuizScreen({navigation, route}) {
     setCurrentOption(null);
   }
 
+  //for going to next question
   function nextQuestion() {
     submitAnswer();
     carouselRef.snapToNext();
   }
 
+  //alerting if no option is selected and setting choice
   function submitQuiz() {
     if (optionArray.length === 0) {
       Alert.alert(
@@ -95,8 +102,10 @@ export default function QuizScreen({navigation, route}) {
         ],
         {cancelable: false},
       );
+    } else {
+      submitAnswer();
+      setChoice('submit');
     }
-    submitAnswer();
   }
 
   const renderOption = ({item}) => {
@@ -232,6 +241,9 @@ var styles = StyleSheet.create({
   doneBtn: {
     alignItems: 'center',
     marginBottom: 30,
+  },
+  btn: {
+    marginHorizontal: 20,
   },
   iconBtn: {
     alignSelf: 'flex-end',

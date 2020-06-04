@@ -51,7 +51,7 @@
   },
   {
     "id": 3,
-    "question": "How many elements does a react component return?",
+    "question": "How many components does a react component have?",
     "options": [
       {
         "id": 1,

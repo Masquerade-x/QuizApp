@@ -7,8 +7,6 @@ import {
   RefreshControl,
   ScrollView,
   ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import {
   responsiveHeight,
@@ -23,10 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default function LoginScreen({navigation}) {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
-  let [userInfo, setUserInfo] = useState('');
   let [refreshing, setRefreshing] = useState(false);
-  let [user, setUser] = useState({});
-  let [errorMessage, setErrorMessage] = useState('');
 
   // Set an initializing state whilst Firebase connects
   let [initializing, setInitializing] = useState(true);
@@ -39,17 +34,13 @@ export default function LoginScreen({navigation}) {
     setInitializing(true);
   }, []);
 
-  function onAuthStateChanged(user) {
-    setUser(user);
-  }
-
   async function Login() {
     try {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
       showMessage({
         message: 'Error',
-        description: 'Invalid credentials !!! Please try again !',
+        description: error.message,
       });
     }
   }

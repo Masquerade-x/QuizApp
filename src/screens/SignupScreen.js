@@ -47,7 +47,6 @@ export default function SignupsScreen({navigation}) {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
     } catch (error) {
-      console.log(error);
       showMessage({
         message: 'Error',
         description: error.message,
